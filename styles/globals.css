@@ -33,3 +33,7 @@ body {
 .logo {
   font-family: 'Inspiration', cursive;
 }
+
+.mobile.appear {
+  left: 0;
+}
