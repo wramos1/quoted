@@ -11,7 +11,7 @@ export function AuthProvider({ children }) {
     const [name, setName] = useState();
     const [loading, setLoading] = useState(true);
 
-    async function signUp(email, password, name, profilePic) {
+    async function signUp(email, password, name) {
         const res = await createUserWithEmailAndPassword(auth, email, password).then((userCred) => {
             updateProfile(userCred.user, { displayName: name });
             setName(name);
@@ -28,9 +28,18 @@ export function AuthProvider({ children }) {
         return sendPasswordResetEmail(auth, email);
     }
 
+    async function updateUser(password, name) {
+        const res = await signInWithEmailAndPassword(auth, currentUser.email, password).then((userCred) => {
+            updateProfile(userCred.user, { displayName: name })
+            setName(name);
+        })
+
+        return res;
+    }
+
     async function emailUpdate(email, password) {
-        const res = await signInWithEmailAndPassword(auth, currentUser.email, password).then((user) => {
-            updateEmail(user.user, email);
+        const res = await signInWithEmailAndPassword(auth, currentUser.email, password).then((userCred) => {
+            updateEmail(userCred.user, email);
         })
 
         return res;
@@ -79,7 +88,8 @@ export function AuthProvider({ children }) {
         logOut,
         resetPassword,
         emailUpdate,
-        passwordUpdate
+        passwordUpdate,
+        updateUser
     }
     return (
         <AuthContext.Provider value={value}>

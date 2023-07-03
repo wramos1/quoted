@@ -7,9 +7,10 @@ import Link from 'next/link';
 const UpdateProfile = () => {
     const emailRef = useRef();
     const passwordRef = useRef();
+    const nameRef = useRef();
     const newPasswordRef = useRef();
     const newPasswordConfirmRef = useRef();
-    const { currentUser, emailUpdate, passwordUpdate } = useAuth();
+    const { currentUser, emailUpdate, passwordUpdate, updateUser } = useAuth();
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
@@ -27,6 +28,9 @@ const UpdateProfile = () => {
         const promises = [];
         if (emailRef.current.value !== currentUser.email) {
             promises.push(emailUpdate(emailRef.current.value, passwordRef.current.value));
+        }
+        if (nameRef.current.value !== currentUser.displayName) {
+            promises.push(updateUser(passwordRef.current.value, nameRef.current.value))
         }
         if (newPasswordRef.current.value) {
             promises.push(passwordUpdate(newPasswordRef.current.value, passwordRef.current.value))
@@ -54,6 +58,10 @@ const UpdateProfile = () => {
                         <div className='flex flex-col text-left'>
                             <label htmlFor="email">Email</label>
                             <input className='text-black py-[10px] px-[5px] text-[1.1em] bg-zinc-300 rounded' type='email' id='email' ref={emailRef} defaultValue={currentUser.email} />
+                        </div>
+                        <div className='flex flex-col text-left'>
+                            <label htmlFor="name">Name</label>
+                            <input className='text-black py-[10px] px-[5px] text-[1.1em] bg-zinc-300 rounded' type='name' id='name' ref={nameRef} defaultValue={currentUser.displayName} />
                         </div>
                         <div className='flex flex-col text-left'>
                             <label htmlFor="password">Old Password</label>
