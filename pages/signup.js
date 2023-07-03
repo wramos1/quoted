@@ -3,12 +3,14 @@ import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
-const login = () => {
+
+const Signup = () => {
 
     const emailRef = useRef();
     const passwordRef = useRef();
     const passwordConfirmRef = useRef();
-    const { logIn } = useAuth();
+    const nameRef = useRef();
+    const { signUp, setName } = useAuth();
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
@@ -24,27 +26,31 @@ const login = () => {
         try {
             setError('');
             setLoading(true);
-            await logIn(emailRef.current.value, passwordRef.current.value);
+            console.log(nameRef.current.value)
+            await signUp(emailRef.current.value, passwordRef.current.value, nameRef.current.value, null);
             router.push('/dashboard');
         } catch (e) {
             setError(e.message)
         }
 
         setLoading(false);
-    };
-
+    }
 
     return (
         <React.Fragment>
             <section className='flex flex-col justify-center items-center min-h-screen auth-bg text-black p-8'>
                 <h1 className='text-[4em] mb-5 logo'>"Quoted"</h1>
                 <div className="form-container w-[375px] relative border bg-white flex justify-center flex-col text-center rounded py-10">
-                    <h2 className='text-[2.5em]'>Log In</h2>
+                    <h2 className='text-[2.5em]'>Sign Up</h2>
                     <form onSubmit={handleSubmit} className='flex justify-evenly flex-col h-3/4 gap-4 p-[10px]'>
                         {error && <div className='error my-[10px] text-[1rem] p-[14px] bg-red-500 text-white outline-none border-none'>{error}</div>}
                         <div className='flex flex-col text-left'>
                             <label htmlFor="email">Email</label>
                             <input className='text-black py-[10px] px-[5px] text-[1.1em] bg-zinc-300 rounded' type='email' id='email' ref={emailRef} />
+                        </div>
+                        <div className='flex flex-col text-left'>
+                            <label htmlFor="name">Name</label>
+                            <input className='text-black py-[10px] px-[5px] text-[1.1em] bg-zinc-300 rounded' type='name' id='name' ref={nameRef} />
                         </div>
                         <div className='flex flex-col text-left'>
                             <label htmlFor="password">Password</label>
@@ -59,11 +65,11 @@ const login = () => {
                             type='submit'
                             className="my-[10px] p-[14px] bg-black text-white text-[1.2rem]"
                         >
-                            Log In
+                            Sign Up
                         </button>
                     </form>
-                    <Link href={'/signup'} className='absolute bottom-0 text-center w-full'>
-                        Don't have an account? Sign Up
+                    <Link href={'/login'} className='absolute bottom-0 text-center w-full'>
+                        Already have an account? Log In
                     </Link>
                 </div>
             </section>
@@ -71,4 +77,4 @@ const login = () => {
     )
 }
 
-export default login
+export default Signup

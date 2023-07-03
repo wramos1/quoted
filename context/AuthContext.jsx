@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import { auth } from '@/firebase/clientApp';
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, updateProfile } from 'firebase/auth';
 
 const AuthContext = createContext();
 
@@ -8,14 +8,24 @@ export const useAuth = () => useContext(AuthContext);
 
 export function AuthProvider({ children }) {
     const [currentUser, setCurrentUser] = useState();
+    const [name, setName] = useState();
     const [loading, setLoading] = useState(true);
 
-    function signUp(email, password) {
-        return createUserWithEmailAndPassword(auth, email, password);
+    async function signUp(email, password, name, profilePic) {
+        const res = await createUserWithEmailAndPassword(auth, email, password).then((userCred) => {
+            updateProfile(userCred.user, { displayName: name });
+            setName(name);
+        })
+
+        return res;
     }
 
     function logIn(email, password) {
         return signInWithEmailAndPassword(auth, email, password);
+    }
+
+    function resetPassword(email) {
+        return sendPasswordResetEmail(auth, email);
     }
 
 
@@ -30,8 +40,10 @@ export function AuthProvider({ children }) {
                 setCurrentUser({
                     uid: user.uid,
                     email: user.email,
-                    displayName: user.displayName
+                    displayName: user.displayName,
+                    photoUrl: user.photoURL
                 })
+                setName(user.displayName)
             }
             else {
                 setCurrentUser(null);
@@ -45,8 +57,10 @@ export function AuthProvider({ children }) {
     const value = {
         currentUser,
         signUp,
+        name,
         logIn,
-        logOut
+        logOut,
+        resetPassword
     }
     return (
         <AuthContext.Provider value={value}>

@@ -6,14 +6,13 @@ import React, { useEffect, useState } from 'react'
 const Navbar = () => {
     const [userMiniNav, setUserMiniNav] = useState(false);
 
-    const { currentUser, logOut } = useAuth();
+    const { logOut, name } = useAuth();
     const router = useRouter();
 
     const [headerClicked, setHeaderClicked] = useState(false);
 
     useEffect(() => {
         tabSelecting();
-        console.log(currentUser);
     }, []);
 
     const tabSelecting = () => {
@@ -74,7 +73,7 @@ const Navbar = () => {
             <div className='flex flex-row items-center gap-5'>
                 <div className='relative'>
                     <h2 className='text-black flex flex-row items-center gap-2 logo text-2xl' onClick={() => setUserMiniNav(!userMiniNav)}>
-                        Sage
+                        {name}
                         <svg width="12" height="12" viewBox="0 0 6 3" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path id="Polygon 1" d="M3 3L0.401924 0.75L5.59808 0.75L3 3Z" fill="black" />
                         </svg>
