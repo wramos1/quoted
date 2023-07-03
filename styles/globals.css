@@ -29,3 +29,7 @@ body {
 .auth-bg {
   background: url('../public/images/image2.png')
 }
+
+.logo {
+  font-family: 'Inspiration', cursive;
+}

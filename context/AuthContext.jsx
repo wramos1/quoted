@@ -27,7 +27,6 @@ export function AuthProvider({ children }) {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
-                console.log(user)
                 setCurrentUser({
                     uid: user.uid,
                     email: user.email,

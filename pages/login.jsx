@@ -38,10 +38,10 @@ const Signup = () => {
     return (
         <React.Fragment>
             <section className='flex flex-col justify-center items-center min-h-screen auth-bg text-black p-8'>
-                <h1 className='text-[3em] mb-5'>"Quoted"</h1>
-                <div className="form-container w-[375px] relative min-h-[550px] border bg-white flex justify-center flex-col text-center rounded">
+                <h1 className='text-[4em] mb-5 logo'>"Quoted"</h1>
+                <div className="form-container w-[375px] relative border bg-white flex justify-center flex-col text-center rounded py-10">
                     <h2 className='text-[2.5em]'>Sign Up</h2>
-                    <form onSubmit={handleSubmit} className='flex justify-evenly flex-col h-3/4 gap-2 p-[10px]'>
+                    <form onSubmit={handleSubmit} className='flex justify-evenly flex-col h-3/4 gap-4 p-[10px]'>
                         {error && <div className='error my-[10px] text-[1rem] p-[14px] bg-red-500 text-white outline-none border-none'>{error}</div>}
                         <div className='flex flex-col text-left'>
                             <label htmlFor="email">Email</label>
