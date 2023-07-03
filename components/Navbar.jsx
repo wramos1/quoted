@@ -1,13 +1,11 @@
 import { useAuth } from '@/context/AuthContext'
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'
 
 const Navbar = () => {
     const [userMiniNav, setUserMiniNav] = useState(false);
 
     const { logOut, name } = useAuth();
-    const router = useRouter();
 
     const [headerClicked, setHeaderClicked] = useState(false);
 
@@ -72,19 +70,19 @@ const Navbar = () => {
 
             <div className='flex flex-row items-center gap-5'>
                 <div className='relative'>
-                    <h2 className='text-black flex flex-row items-center gap-2 logo text-2xl' onClick={() => setUserMiniNav(!userMiniNav)}>
+                    <h2 className='cursor-pointer bg-zinc-200 hover:bg-zinc-300 p-2 rounded-lg text-black flex flex-row items-center gap-2 logo text-2xl' onClick={() => setUserMiniNav(!userMiniNav)}>
                         {name}
-                        <svg width="12" height="12" viewBox="0 0 6 3" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <svg className={`${userMiniNav ? 'rotate-0' : 'rotate-180'} rotate-180 transition-all duration-200`} width="12" height="12" viewBox="0 0 6 3" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path id="Polygon 1" d="M3 3L0.401924 0.75L5.59808 0.75L3 3Z" fill="black" />
                         </svg>
                     </h2>
 
-                    <div className={`${userMiniNav ? 'visible' : 'hidden'} absolute bg-white min-w-[120px] right-[-10px] text-right text-sm border-2`}>
+                    <div className={`${userMiniNav ? 'visible' : 'hidden'} p-1 rounded-sm absolute bg-white min-w-[120px] right-[-10px] text-right text-sm border-2`}>
                         <ul>
-                            <Link href={'/update-profile'} className='border-b-2 flex items-center justify-end p-1 gap-2'>
+                            <Link href={'/profile'} onClick={() => setUserMiniNav(!userMiniNav)} className='hover:bg-zinc-300 border-b-2 flex items-center justify-end p-1 gap-2'>
                                 Profile
                             </Link>
-                            <li className='flex items-center justify-end p-1 gap-2' onClick={() => logOut()}>
+                            <li className='hover:bg-zinc-300 cursor-pointer flex items-center justify-end p-1 gap-2' onClick={() => logOut()}>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="feather feather-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
                                 Log Out
                             </li>

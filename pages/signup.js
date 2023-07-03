@@ -16,11 +16,6 @@ const Signup = () => {
 
     const router = useRouter();
 
-    const handleImageAsFile = (e) => {
-        const image = e.target.files[0];
-        console.log(image);
-    }
-
     async function handleSubmit(e) {
         e.preventDefault();
 
@@ -49,10 +44,6 @@ const Signup = () => {
                     <h2 className='text-[2.5em]'>Sign Up</h2>
                     <form onSubmit={handleSubmit} className='flex justify-evenly flex-col h-3/4 gap-4 p-[10px]'>
                         {error && <div className='error my-[10px] text-[1rem] p-[14px] bg-red-500 text-white outline-none border-none'>{error}</div>}
-                        <div className='flex flex-col text-left'>
-                            <label htmlFor="pfp">Profile Picture</label>
-                            <input className='text-black py-[10px] px-[5px] text-[1.1em] bg-zinc-300 rounded' type='file' id='pfp' onChange={handleImageAsFile} />
-                        </div>
                         <div className='flex flex-col text-left'>
                             <label htmlFor="email">Email</label>
                             <input className='text-black py-[10px] px-[5px] text-[1.1em] bg-zinc-300 rounded' type='email' id='email' required ref={emailRef} />
