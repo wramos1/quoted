@@ -10,11 +10,16 @@ const Signup = () => {
     const passwordRef = useRef();
     const passwordConfirmRef = useRef();
     const nameRef = useRef();
-    const { signUp, setName } = useAuth();
+    const { signUp } = useAuth();
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
     const router = useRouter();
+
+    const handleImageAsFile = (e) => {
+        const image = e.target.files[0];
+        console.log(image);
+    }
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -45,20 +50,24 @@ const Signup = () => {
                     <form onSubmit={handleSubmit} className='flex justify-evenly flex-col h-3/4 gap-4 p-[10px]'>
                         {error && <div className='error my-[10px] text-[1rem] p-[14px] bg-red-500 text-white outline-none border-none'>{error}</div>}
                         <div className='flex flex-col text-left'>
+                            <label htmlFor="pfp">Profile Picture</label>
+                            <input className='text-black py-[10px] px-[5px] text-[1.1em] bg-zinc-300 rounded' type='file' id='pfp' onChange={handleImageAsFile} />
+                        </div>
+                        <div className='flex flex-col text-left'>
                             <label htmlFor="email">Email</label>
-                            <input className='text-black py-[10px] px-[5px] text-[1.1em] bg-zinc-300 rounded' type='email' id='email' ref={emailRef} />
+                            <input className='text-black py-[10px] px-[5px] text-[1.1em] bg-zinc-300 rounded' type='email' id='email' required ref={emailRef} />
                         </div>
                         <div className='flex flex-col text-left'>
                             <label htmlFor="name">Name</label>
-                            <input className='text-black py-[10px] px-[5px] text-[1.1em] bg-zinc-300 rounded' type='name' id='name' ref={nameRef} />
+                            <input className='text-black py-[10px] px-[5px] text-[1.1em] bg-zinc-300 rounded' type='name' id='name' required ref={nameRef} />
                         </div>
                         <div className='flex flex-col text-left'>
                             <label htmlFor="password">Password</label>
-                            <input className='text-black py-[10px] px-[5px] text-[1.1em] bg-zinc-300 rounded' type='password' id='password' ref={passwordRef} />
+                            <input className='text-black py-[10px] px-[5px] text-[1.1em] bg-zinc-300 rounded' type='password' id='password' required ref={passwordRef} />
                         </div>
                         <div className='flex flex-col text-left'>
                             <label htmlFor="passwordConfirm">Password Confirmation</label>
-                            <input className='text-black py-[10px] px-[5px] text-[1.1em] bg-zinc-300 rounded' type='password' id='passwordConfirm' ref={passwordConfirmRef} />
+                            <input className='text-black py-[10px] px-[5px] text-[1.1em] bg-zinc-300 rounded' type='password' id='passwordConfirm' required ref={passwordConfirmRef} />
                         </div>
                         <button
                             disabled={loading}

@@ -39,12 +39,12 @@ const Navbar = () => {
 
 
     return (
-        <nav className='z-50 fixed text-black bg-white text-xl w-full flex items-center justify-between py-4 px-8'>
-            <div className='w-1/3'>
+        <nav className='z-[100] fixed text-black bg-white text-xl w-full flex items-center justify-between py-4 px-8 border-b-2 border-b-black'>
+            <Link href={'/'} className='w-1/3'>
                 <h1 className='logo text-5xl'>
                     "Quoted"
                 </h1>
-            </div>
+            </Link>
 
             <div className="main-nav w-1/3 flex items-center transition-all mobile:h-4/5 mobile:bg-white mobile:top-[87px] mobile:justify-center mobile:fixed mobile:-left-full mobile:flex mobile:flex-col mobile:w-full mobile:z-20 mobile:pt-5">
                 <div className='w-full mobile:flex mobile:justify-center mobile:h-full mobile:text-center'>
@@ -81,11 +81,11 @@ const Navbar = () => {
 
                     <div className={`${userMiniNav ? 'visible' : 'hidden'} absolute bg-white min-w-[120px] right-[-10px] text-right text-sm border-2`}>
                         <ul>
-                            <li className='border-b-2 flex items-center justify-end p-1 gap-2'>
+                            <Link href={'/update-profile'} className='border-b-2 flex items-center justify-end p-1 gap-2'>
                                 Profile
-                            </li>
+                            </Link>
                             <li className='flex items-center justify-end p-1 gap-2' onClick={() => logOut()}>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="feather feather-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
                                 Log Out
                             </li>
                         </ul>

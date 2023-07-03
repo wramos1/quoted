@@ -16,7 +16,9 @@ export default function App({ Component, pageProps }) {
       ) : (
         <ProtectedRoute>
           <Navbar />
-          <Component {...pageProps} />
+          <div className='pt-[5.25rem]'>
+            <Component {...pageProps} />
+          </div>
         </ProtectedRoute>
       )
       }

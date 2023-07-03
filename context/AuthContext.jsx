@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import { auth } from '@/firebase/clientApp';
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, updateProfile } from 'firebase/auth';
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, updateProfile, updateEmail, updatePassword, reauthenticateWithCredential, EmailAuthProvider } from 'firebase/auth';
 
 const AuthContext = createContext();
 
@@ -28,6 +28,22 @@ export function AuthProvider({ children }) {
         return sendPasswordResetEmail(auth, email);
     }
 
+    async function emailUpdate(email, password) {
+        const res = await signInWithEmailAndPassword(auth, currentUser.email, password).then((user) => {
+            updateEmail(user.user, email);
+        })
+
+        return res;
+    }
+
+    async function passwordUpdate(newPassword, password) {
+        const res = await signInWithEmailAndPassword(auth, currentUser.email, password).then((user) => {
+            updatePassword(user.user, newPassword);
+        })
+
+        return res;
+    }
+
 
     async function logOut() {
         setCurrentUser(null);
@@ -44,6 +60,7 @@ export function AuthProvider({ children }) {
                     photoUrl: user.photoURL
                 })
                 setName(user.displayName)
+
             }
             else {
                 setCurrentUser(null);
@@ -60,7 +77,9 @@ export function AuthProvider({ children }) {
         name,
         logIn,
         logOut,
-        resetPassword
+        resetPassword,
+        emailUpdate,
+        passwordUpdate
     }
     return (
         <AuthContext.Provider value={value}>
