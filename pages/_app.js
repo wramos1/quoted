@@ -11,8 +11,8 @@ export default function App({ Component, pageProps }) {
   const router = useRouter();
 
   return (
-    <AuthProvider>
-      <StorageProvider>
+    <StorageProvider>
+      <AuthProvider>
         {noAuthRequired.includes(router.pathname) ? (
           <Component {...pageProps} />
         ) : (
@@ -24,7 +24,7 @@ export default function App({ Component, pageProps }) {
           </ProtectedRoute>
         )
         }
-      </StorageProvider>
-    </AuthProvider>
+      </AuthProvider>
+    </StorageProvider>
   )
 }

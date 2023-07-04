@@ -11,12 +11,10 @@ const UpdateProfile = () => {
     const nameRef = useRef();
     const newPasswordRef = useRef();
     const newPasswordConfirmRef = useRef();
-    const { currentUser, emailUpdate, passwordUpdate, updateUser } = useAuth();
+    const { currentUser, emailUpdate, passwordUpdate, updateUser, name } = useAuth();
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
-    const [photo, setPhoto] = useState(null);
-
-    const { upload } = useStorage();
+    const [uploadedPhoto, setUploadedPhoto] = useState(null);
 
     function handleFileSelect(e) {
         const file = e.target.files[0];
@@ -26,7 +24,7 @@ const UpdateProfile = () => {
                 alert("File is not a valid image");
             }
             else {
-                setPhoto(file);
+                setUploadedPhoto(file);
             }
         }
     }
@@ -39,6 +37,7 @@ const UpdateProfile = () => {
         setError('');
 
         if (newPasswordRef.current.value !== newPasswordConfirmRef.current.value) {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
             return setError("Passwords do not match");
         }
 
@@ -46,8 +45,9 @@ const UpdateProfile = () => {
         if (emailRef.current.value !== currentUser.email) {
             promises.push(emailUpdate(emailRef.current.value, passwordRef.current.value));
         }
-        if (nameRef.current.value !== currentUser.displayName) {
-            promises.push(updateUser(passwordRef.current.value, nameRef.current.value))
+        if (nameRef.current.value !== currentUser.displayName || uploadedPhoto) {
+            let nameToBeUsed = nameRef.current.value === currentUser.displayName ? currentUser.displayName : nameRef.current.value;
+            promises.push(updateUser(passwordRef.current.value, nameToBeUsed, uploadedPhoto))
         }
         if (newPasswordRef.current.value) {
             promises.push(passwordUpdate(newPasswordRef.current.value, passwordRef.current.value))
@@ -57,6 +57,7 @@ const UpdateProfile = () => {
             router.push('/');
         })
             .catch((e) => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
                 setError(e.message);
             }).finally(() => {
                 setLoading(false);
@@ -68,19 +69,25 @@ const UpdateProfile = () => {
     return (
         <React.Fragment>
             <section className='flex flex-col justify-center items-center min-h-screen auth-bg text-black p-8'>
-                <div className="form-container w-[375px] relative border bg-white flex justify-center flex-col text-center rounded py-10">
+                <div className="form-container w-[375px] lg:w-1/2 relative border bg-white flex justify-center flex-col text-center rounded py-10">
                     <h2 className='text-[2.5em]'>Update Profile</h2>
                     <form onSubmit={handleSubmit} className='flex justify-evenly flex-col h-3/4 gap-4 p-[10px]'>
                         {error && <div className='error my-[10px] text-[1rem] p-[14px] bg-red-500 text-white outline-none border-none'>{error}</div>}
-                        <div className='flex justify-center items-center flex-col gap-5 md:w-1/2'>
+                        <div className='flex justify-center items-center flex-col gap-5'>
                             <div className='border border-black rounded-full w-[150px] h-[150px] flex justify-center items-center relative flex-col'>
                                 {
-                                    !photo ?
-                                        (
-                                            <svg className='pt-[20px]' fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"></path>
-                                            </svg>
-                                        ) :
+                                    !uploadedPhoto ?
+                                        !currentUser.photoUrl ?
+                                            (
+                                                <svg className='pt-[20px]' fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"></path>
+                                                </svg>
+                                            )
+                                            :
+                                            (
+                                                <img className='pt-[20px] flex justify-center items-center w-[90px]' src={currentUser.photoUrl} alt="profile-pic" />
+                                            )
+                                        :
                                         <div className='pt-[10px] flex justify-center flex-col items-center'>
                                             <svg className='w-[20px]' fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5"></path>
@@ -99,8 +106,8 @@ const UpdateProfile = () => {
                                 </label>
                             </div>
 
-                            <button onClick={() => setPhoto(null)} className={`${photo ? 'block' : 'hidden'} border-white border bg-red-500 p-2 rounded-md`}>
-                                Remove
+                            <button onClick={() => setUploadedPhoto(null)} className={`${uploadedPhoto ? 'block' : 'hidden'} border-white border bg-red-500 p-2 rounded-md`}>
+                                Cancel
                             </button>
 
                         </div>
@@ -110,7 +117,7 @@ const UpdateProfile = () => {
                         </div>
                         <div className='flex flex-col text-left'>
                             <label htmlFor="name">Name</label>
-                            <input className='text-black py-[10px] px-[5px] text-[1.1em] bg-zinc-300 rounded' type='name' id='name' ref={nameRef} defaultValue={currentUser.displayName} />
+                            <input className='text-black py-[10px] px-[5px] text-[1.1em] bg-zinc-300 rounded' type='name' id='name' ref={nameRef} defaultValue={currentUser.displayName ? currentUser.displayName : name} />
                         </div>
                         <div className='flex flex-col text-left'>
                             <label htmlFor="password">Old Password</label>
@@ -127,7 +134,7 @@ const UpdateProfile = () => {
                         <button
                             disabled={loading}
                             type='submit'
-                            className="my-[10px] p-[14px] bg-black text-white text-[1.2rem]"
+                            className="my-[10px] p-[14px] bg-black text-white text-[1.2rem] cursor-pointer hover:bg-zinc-500"
                         >
                             Update
                         </button>

@@ -22,6 +22,7 @@ const ForgotPassword = () => {
             setMessage("Check your inbox for further instructions");
             emailRef.current.value = '';
         } catch (e) {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
             setError(e.message);
         }
 
@@ -50,7 +51,7 @@ const ForgotPassword = () => {
                             Reset Password
                         </button>
                     </form>
-                    <Link href={'/login'} className='absolute bottom-0 text-center w-full'>
+                    <Link href={'/login'} className='absolute bottom-0 text-center w-full text-zinc-500 hover:text-black'>
                         Log In
                     </Link>
                 </div>
