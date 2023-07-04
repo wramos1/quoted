@@ -22,6 +22,7 @@ const login = () => {
             await logIn(emailRef.current.value, passwordRef.current.value);
             router.push('/dashboard');
         } catch (e) {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
             setError(e.message)
         }
 
@@ -53,11 +54,11 @@ const login = () => {
                             Log In
                         </button>
 
-                        <Link href={'/forgot-password'} className='text-center'>
+                        <Link href={'/forgot-password'} className='text-center text-zinc-500 hover:text-black'>
                             Forgot Password?
                         </Link>
                     </form>
-                    <Link href={'/signup'} className='absolute bottom-0 text-center w-full'>
+                    <Link href={'/signup'} className='absolute bottom-0 text-center w-full text-zinc-500 hover:text-black'>
                         Don't have an account? Sign Up
                     </Link>
                 </div>

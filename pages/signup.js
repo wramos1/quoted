@@ -20,6 +20,7 @@ const Signup = () => {
         e.preventDefault();
 
         if (passwordRef.current.value !== passwordConfirmRef.current.value) {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
             return setError("Passwords do not match");
         }
 
@@ -30,6 +31,7 @@ const Signup = () => {
             await signUp(emailRef.current.value, passwordRef.current.value, nameRef.current.value, null);
             router.push('/dashboard');
         } catch (e) {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
             setError(e.message)
         }
 
@@ -68,7 +70,7 @@ const Signup = () => {
                             Sign Up
                         </button>
                     </form>
-                    <Link href={'/login'} className='absolute bottom-0 text-center w-full'>
+                    <Link href={'/login'} className='absolute bottom-0 text-center w-full text-zinc-500 hover:text-black'>
                         Already have an account? Log In
                     </Link>
                 </div>
