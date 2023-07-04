@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import { auth } from '@/firebase/clientApp';
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, updateProfile, updateEmail, updatePassword } from 'firebase/auth';
+import { useStorage } from './StorageContext';
 
 const AuthContext = createContext();
 
@@ -11,6 +12,7 @@ export function AuthProvider({ children }) {
     const [name, setName] = useState();
     const [photo, setPhoto] = useState();
     const [loading, setLoading] = useState(true);
+    const { upload } = useStorage();
 
     async function signUp(email, password, name) {
         const res = await createUserWithEmailAndPassword(auth, email, password).then((userCred) => {
@@ -30,8 +32,15 @@ export function AuthProvider({ children }) {
     }
 
     async function updateUser(password, name, photo) {
+        let photoLink = "";
+
+        if (photo) {
+            photoLink = await upload(photo, currentUser);
+            console.log(photoLink);
+        }
+
         const res = await signInWithEmailAndPassword(auth, currentUser.email, password).then((userCred) => {
-            updateProfile(userCred.user, { displayName: name, photoURL: photo })
+            updateProfile(userCred.user, { displayName: name, photoURL: photoLink })
             setName(name);
             setPhoto(photo);
         })
@@ -72,7 +81,6 @@ export function AuthProvider({ children }) {
                 })
                 setName(user.displayName);
                 setPhoto(user.photoURL);
-
             }
             else {
                 setCurrentUser(null);
@@ -87,6 +95,7 @@ export function AuthProvider({ children }) {
         currentUser,
         signUp,
         name,
+        photo,
         logIn,
         logOut,
         resetPassword,

@@ -1,35 +1,31 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import { storage } from '@/firebase/clientApp';
-import { ref, uploadBytes } from 'firebase/storage'
-import { useAuth } from './AuthContext';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 
 const StorageContext = createContext();
 
 export const useStorage = () => useContext(StorageContext);
 
 export function StorageProvider({ children }) {
-    const [loading, setLoading] = useState(true);
-    const { currentUser } = useAuth();
 
-    async function upload(file) {
-        const fileRef = ref(storage, currentUser.uuid + '.png');
-        setLoading(true);
-        const snapShot = await uploadBytes(fileRef, file)
 
-        setLoading(false);
-        return snapShot;
+    async function upload(file, currentUser) {
+        const fileRef = ref(storage, '/profile-pics/' + currentUser.uuid + '.png');
+
+        const snapShot = await uploadBytes(fileRef, file).then(() => {
+            alert("Uploaded file");
+        });
+        const photoUrl = await getDownloadURL(fileRef);
+
+        return photoUrl;
     }
-
-    useEffect(() => {
-        setLoading(false);
-    }, [])
 
     const value = {
         upload
     }
     return (
         <StorageContext.Provider value={value}>
-            {loading ? null : children}
+            {children}
         </StorageContext.Provider>
     )
 }
