@@ -1,10 +1,11 @@
-import { useAuth } from '@/context/AuthContext'
+import { useAuth } from '@/context/AuthContext';
 import Link from 'next/link';
-import React from 'react'
+import React, { useEffect, useState } from 'react';
 
 const Profile = () => {
 
     const { currentUser, logOut, name } = useAuth();
+
 
     return (
         <div className="flex justify-center items-center min-h-[80vh] px-10">
@@ -13,7 +14,7 @@ const Profile = () => {
                     <svg className='pt-[20px]' fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"></path>
                     </svg>
-                    <input className='cursor-pointer invisible' id="file-upload" type="file" />
+                    <input onChange={handleChange} className='cursor-pointer invisible' id="file-upload" type="file" />
                     <label htmlFor="file-upload" className="custom-file-upload">
                         <div className='w-[32px] absolute right-4 top-2 rounded-full border border-white p-1 flex justify-center bg-black hover:bg-white hover:text-black cursor-pointer'>
                             <svg className='w-[27px] right-5' fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -23,6 +24,7 @@ const Profile = () => {
                         </div>
                     </label>
                 </div>
+
 
                 <div className='w-full flex flex-col text-left'>
                     <label>Name</label>

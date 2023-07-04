@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import { auth } from '@/firebase/clientApp';
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, updateProfile, updateEmail, updatePassword, reauthenticateWithCredential, EmailAuthProvider } from 'firebase/auth';
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, updateProfile, updateEmail, updatePassword } from 'firebase/auth';
 
 const AuthContext = createContext();
 
@@ -9,6 +9,7 @@ export const useAuth = () => useContext(AuthContext);
 export function AuthProvider({ children }) {
     const [currentUser, setCurrentUser] = useState();
     const [name, setName] = useState();
+    const [photo, setPhoto] = useState();
     const [loading, setLoading] = useState(true);
 
     async function signUp(email, password, name) {
@@ -28,10 +29,11 @@ export function AuthProvider({ children }) {
         return sendPasswordResetEmail(auth, email);
     }
 
-    async function updateUser(password, name) {
+    async function updateUser(password, name, photo) {
         const res = await signInWithEmailAndPassword(auth, currentUser.email, password).then((userCred) => {
-            updateProfile(userCred.user, { displayName: name })
+            updateProfile(userCred.user, { displayName: name, photoURL: photo })
             setName(name);
+            setPhoto(photo);
         })
 
         return res;
@@ -68,7 +70,8 @@ export function AuthProvider({ children }) {
                     displayName: user.displayName,
                     photoUrl: user.photoURL
                 })
-                setName(user.displayName)
+                setName(user.displayName);
+                setPhoto(user.photoURL);
 
             }
             else {
