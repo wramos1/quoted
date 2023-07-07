@@ -48,20 +48,14 @@ const Navbar = () => {
                 <div className='w-full mobile:flex mobile:justify-center mobile:h-full mobile:text-center'>
                     <ul className='flex item-center justify-between flex-row mobile:flex-col mobile:justify-start mobile:gap-[20%]'>
                         <li className='hover:text-slate-400 nav-link'>
-                            <Link href={'/menu'}>
-                                Menu
+                            <Link href={'/my-posts'}>
+                                My Posts
                             </Link>
                         </li>
 
                         <li className='hover:text-slate-400 nav-link'>
-                            <Link href={'/about-us'}>
-                                About Us
-                            </Link>
-                        </li>
-
-                        <li className='hover:text-slate-400 nav-link'>
-                            <Link href={'/careers'}>
-                                Careers
+                            <Link href={'/posts'}>
+                                Create post
                             </Link>
                         </li>
                     </ul>
