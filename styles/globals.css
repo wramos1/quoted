@@ -37,3 +37,23 @@ body {
 .mobile.appear {
   left: 0;
 }
+
+.author-name {
+  font-family: "EB Garamond";
+  font-weight: 100;
+  -webkit-font-smoothing: antialiased;
+  font-size:calc(100% + 3vw)
+}
+
+.quote {
+  font-weight: 100;
+  -webkit-font-smoothing: antialiased;
+  font-size: calc(90% + 1.5vw);
+  font-family: Source Serif Pro;
+  }
+
+.time {
+  font-weight: 100;
+  -webkit-font-smoothing: antialiased;
+  font-family: Source Serif Pro;
+}

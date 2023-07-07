@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import { storage } from '@/firebase/clientApp';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
+import { db } from '@/firebase/clientApp';
+import { collection, addDoc } from "firebase/firestore";
 
 const StorageContext = createContext();
 
@@ -20,8 +22,34 @@ export function StorageProvider({ children }) {
         return photoUrl;
     }
 
+    async function uploadNewPost(author, quote, time, file, email) {
+        let photoUrl = '';
+        if (file) {
+            const fileRef = ref(storage, '/author-pics/' + '.png');
+            const snapShot = await uploadBytes(fileRef, file).then(() => {
+                alert("Uploaded file");
+            });
+            photoUrl = await getDownloadURL(fileRef);
+        }
+
+        const docRef = await addDoc(collection(db, "posts"), {
+            author: author,
+            authorPhoto: photoUrl === '' ? null : photoUrl,
+            quote: quote,
+            timePosted: time,
+            user: email,
+        })
+
+        return docRef;
+
+    }
+
+
+
+
     const value = {
-        upload
+        upload,
+        uploadNewPost
     }
     return (
         <StorageContext.Provider value={value}>
