@@ -1,11 +1,45 @@
-import React from 'react'
+import PostList from '@/components/PostList';
+import { db } from '@/firebase/clientApp';
+import { getDocs, getDoc, collection, setDoc, doc, query } from "firebase/firestore";
+import Link from 'next/link';
 
-const dashboard = () => {
+import React, { useEffect, useState } from 'react'
+
+const Dashboard = () => {
+    const [posts, setPosts] = useState();
+
+    const getPosts = async () => {
+        let postList = [];
+        const querySnapshot = await getDocs(collection(db, "posts"));
+        querySnapshot.forEach((doc) => {
+            let newObj = Object.assign(doc.data(), { id: doc.id })
+            postList.push(newObj);
+        });
+
+        setPosts(postList);
+
+    };
+
+    useEffect(() => {
+        getPosts();
+    }, [])
+
     return (
-        <div className='flex justify-center items-center'>
-            <h1 className='pt-2 text-5xl'>Dashboard</h1>
+        <div className='flex justify-center items-center flex-col gap-2 bg-white text-black py-4'>
+            <h1 className='my-5 text-6xl'>
+                Dashboard
+            </h1>
+
+            {posts && <PostList posts={posts} />}
+
+
+            <Link href={'/posts'} className='px-6 py-3 bg-[#FFD363] text-black '>
+                Create A Post
+            </Link>
+
+
         </div>
     )
 }
 
-export default dashboard
+export default Dashboard

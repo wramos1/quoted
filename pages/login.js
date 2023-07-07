@@ -49,7 +49,7 @@ const login = () => {
                         <button
                             disabled={loading}
                             type='submit'
-                            className="my-[10px] p-[14px] bg-black text-white text-[1.2rem]"
+                            className="my-[10px] p-[14px] bg-black text-white text-[1.2rem] hover:bg-black/70"
                         >
                             Log In
                         </button>

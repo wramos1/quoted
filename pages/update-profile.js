@@ -2,8 +2,6 @@ import React, { useRef, useState } from 'react'
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { useStorage } from '@/context/StorageContext';
-
 
 const UpdateProfile = () => {
     const emailRef = useRef();
@@ -19,7 +17,6 @@ const UpdateProfile = () => {
     function handleFileSelect(e) {
         const file = e.target.files[0];
         if (file) {
-            console.log(file);
             if (!file.type.includes("image")) {
                 alert("File is not a valid image");
             }
@@ -107,7 +104,7 @@ const UpdateProfile = () => {
                             </div>
 
                             <button onClick={() => setUploadedPhoto(null)} className={`${uploadedPhoto ? 'block' : 'hidden'} border-white border bg-red-500 p-2 rounded-md`}>
-                                Cancel
+                                Remove
                             </button>
 
                         </div>
