@@ -19,6 +19,12 @@ const MyPosts = () => {
             stack.push(newObj);
         })
 
+        stack.sort((a, b) => {
+            let date1 = new Date(a.timePosted);
+            let date2 = new Date(b.timePosted);
+            return date2 - date1
+        })
+
         setUserPosts(stack);
     }
 
@@ -30,7 +36,7 @@ const MyPosts = () => {
         <div className='flex justify-center items-center flex-col bg-white text-black py-4'>
             <h1 className='text-4xl my-4'>My Posts</h1>
 
-            {userPosts ? <PostList posts={userPosts} /> : null}
+            {userPosts ? <PostList posts={userPosts} setPosts={setUserPosts} /> : null}
 
 
             <Link href={'/posts'} className='px-6 py-3 bg-[#FFD363] text-black '>

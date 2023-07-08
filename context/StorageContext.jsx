@@ -22,7 +22,7 @@ export function StorageProvider({ children }) {
         return photoUrl;
     }
 
-    async function uploadNewPost(author, quote, time, file, email) {
+    async function uploadNewPost(author, quote, time, file, email, timeToCompare) {
         let photoUrl = '';
         if (file) {
             const fileRef = ref(storage, '/author-pics/' + '.png');
@@ -38,6 +38,7 @@ export function StorageProvider({ children }) {
             quote: quote,
             timePosted: time,
             user: email,
+            timestamp: timeToCompare
         })
 
         return docRef;

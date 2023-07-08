@@ -1,6 +1,6 @@
 import PostList from '@/components/PostList';
 import { db } from '@/firebase/clientApp';
-import { getDocs, getDoc, collection, setDoc, doc, query } from "firebase/firestore";
+import { getDocs, getDoc, collection, orderBy, query } from "firebase/firestore";
 import Link from 'next/link';
 
 import React, { useEffect, useState } from 'react'
@@ -10,7 +10,8 @@ const Dashboard = () => {
 
     const getPosts = async () => {
         let postList = [];
-        const querySnapshot = await getDocs(collection(db, "posts"));
+        const q = query(collection(db, "posts"), orderBy("timestamp", "desc"))
+        const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
             let newObj = Object.assign(doc.data(), { id: doc.id })
             postList.push(newObj);
@@ -30,7 +31,7 @@ const Dashboard = () => {
                 Dashboard
             </h1>
 
-            {posts && <PostList posts={posts} />}
+            {posts && <PostList posts={posts} setPosts={setPosts} />}
 
 
             <Link href={'/posts'} className='px-6 py-3 bg-[#FFD363] text-black '>
