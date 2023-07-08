@@ -1,4 +1,5 @@
 import { useAuth } from '@/context/AuthContext'
+import Link from 'next/link';
 import React from 'react'
 
 const Post = ({ post }) => {
@@ -7,7 +8,7 @@ const Post = ({ post }) => {
 
 
     return (
-        <div className='bg-black rounded-md min-h-[250px] max-w-[450px] basis-1/4 flex items-stretch border py-[20px] px-[5px] relative'>
+        <div className='post bg-black rounded-md min-h-[250px] h-[250px] min-w-[400px] w-[90%] lg:w-1/2 lg: basis-1/4 flex items-stretch border py-[20px] px-[5px] relative'>
             <div className='my-0 mx-[10px] w-1/2 flex justify-center items-center border border-[#CFAB4E]'>
                 {post.authorPhoto ?
                     (
@@ -20,18 +21,20 @@ const Post = ({ post }) => {
                     )
                 }
             </div>
-            <div className='w-1/2 flex flex-col h-[inherit] justify-between text-white'>
-                <h2 className='text-2xl author-name'>{post.author}</h2>
-                <p className='text-[#FFD363] quote break-words break-all'>
+            <div className='w-1/2 flex flex-col justify-between text-white post-details'>
+                <h2 className='text-[2em] author-name'>{post.author}</h2>
+                <p className='text-[#FFD363] quote break-words p-2'>
                     "{post.quote}"
                 </p>
                 <span className='text-sm time align-end justify-end block'>{`Posted at ${post.timePosted}`}</span>
             </div>
 
             {post.user === currentUser.email ?
-                (<div className='absolute top-2 right-2 bg-blue-400 text-white py-1 px-2 rounded-md hover:brightness-75'>
-                    Edit
-                </div>) : null}
+                (
+                    <Link href={`/posts/${post.id}`} className='cursor-pointer absolute top-2 right-2 bg-blue-400 text-white py-1 px-2 rounded-md hover:brightness-75'>
+                        Edit
+                    </Link>
+                ) : null}
         </div>
     )
 }
