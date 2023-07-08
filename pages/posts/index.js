@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { useStorage } from '@/context/StorageContext';
 import { useAuth } from '@/context/AuthContext';
+import { Timestamp } from "firebase/firestore"
 
 const Posts = () => {
     const authorName = useRef();
@@ -40,11 +41,12 @@ const Posts = () => {
         }
 
         let time = new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString('en-US', { hour: "numeric", minute: "numeric" });
+        let timeToCompare = Timestamp.fromDate(new Date()).toDate();
 
         try {
             setError('');
             setLoading(true);
-            await uploadNewPost(authorName.current.value, quoteRef.current.value, time, uploadedPhoto, currentUser.email)
+            await uploadNewPost(authorName.current.value, quoteRef.current.value, time, uploadedPhoto, currentUser.email, timeToCompare)
             router.push('/dashboard');
         } catch (e) {
             window.scrollTo({ top: 0, behavior: 'smooth' });

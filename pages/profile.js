@@ -17,7 +17,7 @@ const Profile = () => {
                             </svg>
 
                         ) :
-                        <img className='w-[90px]' src={currentUser.photoUrl} alt="profilePic" />
+                        <img className='mt-[20px] h-[90px] rounded-full w-[90px]' src={currentUser.photoUrl} alt="profilePic" />
                     }
                     <Link href={"/update-profile"}>
                         <label htmlFor="file-upload" className="custom-file-upload">

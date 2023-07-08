@@ -24,6 +24,16 @@ const Signup = () => {
             return setError("Passwords do not match");
         }
 
+        if (emailRef.current.value.trim() === '') {
+            alert("Email is required")
+            return;
+        }
+
+        if (nameRef.current.value.trim() === '') {
+            alert("Name is required")
+            return;
+        }
+
         try {
             setError('');
             setLoading(true);

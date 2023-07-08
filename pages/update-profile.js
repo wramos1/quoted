@@ -82,7 +82,7 @@ const UpdateProfile = () => {
                                             )
                                             :
                                             (
-                                                <img className='pt-[20px] flex justify-center items-center w-[90px]' src={currentUser.photoUrl} alt="profile-pic" />
+                                                <img className='mt-[20px] h-[90px] rounded-full flex justify-center items-center w-[90px]' src={currentUser.photoUrl} alt="profile-pic" />
                                             )
                                         :
                                         <div className='pt-[10px] flex justify-center flex-col items-center'>

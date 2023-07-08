@@ -42,13 +42,11 @@ body {
   font-family: "EB Garamond";
   font-weight: 100;
   -webkit-font-smoothing: antialiased;
-  font-size:calc(100% + 3vw)
 }
 
 .quote {
   font-weight: 100;
   -webkit-font-smoothing: antialiased;
-  font-size: calc(90% + 1.5vw);
   font-family: Source Serif Pro;
   }
 
