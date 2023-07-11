@@ -36,7 +36,6 @@ export function AuthProvider({ children }) {
 
         if (photo) {
             photoLink = await upload(photo, currentUser);
-            console.log(photoLink);
         }
 
         const res = await signInWithEmailAndPassword(auth, currentUser.email, password).then((userCred) => {

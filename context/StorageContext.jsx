@@ -2,7 +2,8 @@ import React, { createContext, useContext, useEffect, useState } from 'react'
 import { storage } from '@/firebase/clientApp';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { db } from '@/firebase/clientApp';
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, updateDoc, doc, deleteDoc } from "firebase/firestore";
+import { v4 } from 'uuid';
 
 const StorageContext = createContext();
 
@@ -25,7 +26,7 @@ export function StorageProvider({ children }) {
     async function uploadNewPost(author, quote, time, file, email, timeToCompare) {
         let photoUrl = '';
         if (file) {
-            const fileRef = ref(storage, '/author-pics/' + '.png');
+            const fileRef = ref(storage, '/author-pics/' + v4() + '.png');
             const snapShot = await uploadBytes(fileRef, file).then(() => {
                 alert("Uploaded file");
             });
@@ -45,13 +46,35 @@ export function StorageProvider({ children }) {
 
     }
 
+    async function updatePost(data, docId, newPhoto) {
+        const docRef = doc(db, "posts", docId);
+        if (newPhoto) {
+            const fileRef = ref(storage, '/author-pics/' + v4() + '.png');
+            const snapShot = await uploadBytes(fileRef, newPhoto).then(() => {
+                alert("Uploaded file");
+            });
+            data.authorPhoto = await getDownloadURL(fileRef);
+        }
+
+        return await updateDoc(docRef, data);
+    }
+
+    async function deletePost(docId) {
+        const docRef = doc(db, "posts", docId);
+
+        return await deleteDoc(docRef);
+    }
+
 
 
 
     const value = {
         upload,
-        uploadNewPost
+        uploadNewPost,
+        updatePost,
+        deletePost
     }
+
     return (
         <StorageContext.Provider value={value}>
             {children}
