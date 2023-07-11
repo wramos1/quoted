@@ -3,7 +3,7 @@ import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
-const login = () => {
+const Login = () => {
 
     const emailRef = useRef();
     const passwordRef = useRef();
@@ -67,4 +67,4 @@ const login = () => {
     )
 }
 
-export default login
+export default Login
