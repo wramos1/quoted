@@ -37,7 +37,6 @@ const Signup = () => {
         try {
             setError('');
             setLoading(true);
-            console.log(nameRef.current.value)
             await signUp(emailRef.current.value, passwordRef.current.value, nameRef.current.value, null);
             router.push('/dashboard');
         } catch (e) {

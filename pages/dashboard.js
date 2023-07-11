@@ -26,7 +26,7 @@ const Dashboard = () => {
     }, [])
 
     return (
-        <div className='flex justify-center items-center flex-col gap-2 bg-white text-black py-4'>
+        <div className='flex items-center h-[120vh] flex-col gap-2 bg-white text-black py-4'>
             <h1 className='my-5 text-6xl'>
                 Dashboard
             </h1>

@@ -66,7 +66,7 @@ const Navbar = () => {
                 <div className='relative'>
                     <h2 className='cursor-pointer bg-zinc-200 hover:bg-zinc-300 p-2 rounded-lg text-black flex flex-row items-center gap-2 logo text-2xl' onClick={() => setUserMiniNav(!userMiniNav)}>
                         {name}
-                        <svg className={`${userMiniNav ? 'rotate-0' : 'rotate-180'} rotate-180 transition-all duration-200`} width="12" height="12" viewBox="0 0 6 3" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <svg className={`${userMiniNav ? 'rotate-0' : 'rotate-180'} transition-all transform duration-200`} width="12" height="12" viewBox="0 0 6 3" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path id="Polygon 1" d="M3 3L0.401924 0.75L5.59808 0.75L3 3Z" fill="black" />
                         </svg>
                     </h2>

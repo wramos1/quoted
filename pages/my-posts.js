@@ -33,7 +33,7 @@ const MyPosts = () => {
     }, [])
 
     return (
-        <div className='flex justify-center items-center flex-col bg-white text-black py-4'>
+        <div className='flex items-center h-[120vh] flex-col gap-2 bg-white text-black py-4'>
             <h1 className='text-4xl my-4'>My Posts</h1>
 
             {userPosts ? <PostList posts={userPosts} setPosts={setUserPosts} /> : null}

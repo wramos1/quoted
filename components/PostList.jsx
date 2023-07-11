@@ -9,7 +9,7 @@ const PostList = ({ posts, setPosts }) => {
     }
 
     return (
-        <div className='flex flex-col px-3 w-full'>
+        <div className='flex flex-col px-3 w-full xl:w-4/5'>
             <div className='w-[140px] px-1 rounded-md bg-[#FFD363]'>
                 <label htmlFor="sort-quotes" className='text-black'>Sort by: </label>
                 <select className='bg-transparent outline-none text-black rounded-sm' name="sort-quotes" id="sort-quotes" defaultValue={"latest"} onChange={() => handleOnSelect()}>
@@ -24,7 +24,7 @@ const PostList = ({ posts, setPosts }) => {
             </div>
 
 
-            <div className='auth-bg min-h-[400px] h-[500px] overflow-y-scroll rounded-md my-4 py-5 flex items-center flex-col gap-8 '>
+            <div className='auth-bg min-h-[400px] xl:h-[550px] h-[500px] overflow-y-scroll rounded-md my-4 py-5 flex items-center flex-col gap-8 border-2 border-black'>
                 {posts.map((post) => {
                     return (
                         <Post
