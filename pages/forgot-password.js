@@ -10,8 +10,6 @@ const ForgotPassword = () => {
     const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(false);
 
-
-
     async function handleSubmit(e) {
         e.preventDefault();
 
