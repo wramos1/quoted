@@ -9,7 +9,7 @@ const UpdateProfile = () => {
     const nameRef = useRef();
     const newPasswordRef = useRef();
     const newPasswordConfirmRef = useRef();
-    const { currentUser, emailUpdate, passwordUpdate, updateUser, name } = useAuth();
+    const { currentUser, emailUpdate, passwordUpdate, updateUser, name, logOut } = useAuth();
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const [uploadedPhoto, setUploadedPhoto] = useState(null);
@@ -26,7 +26,14 @@ const UpdateProfile = () => {
         }
     }
 
+
     const router = useRouter();
+
+    const resetPassword = () => {
+        logOut();
+        router.push('/');
+    }
+
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -135,6 +142,11 @@ const UpdateProfile = () => {
                         >
                             Update
                         </button>
+
+
+                        <h2 onClick={() => resetPassword()} className='text-center text-zinc-500 hover:text-black'>
+                            Log Out To Reset Password
+                        </h2>
 
                     </form>
                     <Link href={'/'} className='absolute bottom-0 text-center w-full'>
